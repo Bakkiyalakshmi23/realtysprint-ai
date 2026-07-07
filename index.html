@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RealtySprint AI — Reply to every real estate lead in under 5 minutes</title>
+<style>
+  :root{
+    --navy:#1F3A5F; --blue:#2E75B6; --accent:#00b894; --ink:#1a1a1a;
+    --muted:#5b6472; --bg:#ffffff; --soft:#f4f8fc; --line:#e3e9f0;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;color:var(--ink);line-height:1.6;background:var(--bg)}
+  a{text-decoration:none;color:inherit}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+  .btn{display:inline-block;background:var(--blue);color:#fff;padding:14px 26px;border-radius:10px;font-weight:600;transition:.2s;border:none;cursor:pointer;font-size:16px}
+  .btn:hover{background:var(--navy);transform:translateY(-1px)}
+  .btn-ghost{background:transparent;border:2px solid #fff;color:#fff}
+  .btn-ghost:hover{background:#fff;color:var(--navy)}
+
+  /* nav */
+  nav{position:sticky;top:0;background:rgba(255,255,255,.95);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);z-index:10}
+  nav .wrap{display:flex;align-items:center;justify-content:space-between;height:66px}
+  .logo{font-weight:800;font-size:20px;color:var(--navy);letter-spacing:-.5px}
+  .logo span{color:var(--blue)}
+  .navlinks a{margin-left:26px;color:var(--muted);font-weight:500;font-size:15px}
+  .navlinks a:hover{color:var(--navy)}
+  .navlinks .btn{color:#fff;margin-left:26px;padding:10px 20px;font-size:15px}
+  @media(max-width:720px){.navlinks a:not(.btn){display:none}}
+
+  /* hero */
+  .hero{background:linear-gradient(135deg,var(--navy),#274b78);color:#fff;padding:84px 0 92px;position:relative;overflow:hidden}
+  .hero:after{content:"";position:absolute;right:-120px;top:-120px;width:420px;height:420px;background:radial-gradient(circle,rgba(46,117,182,.5),transparent 70%);border-radius:50%}
+  .badge{display:inline-block;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);padding:6px 14px;border-radius:30px;font-size:13px;font-weight:600;margin-bottom:22px;letter-spacing:.3px}
+  .hero h1{font-size:52px;line-height:1.08;font-weight:800;letter-spacing:-1.2px;max-width:800px}
+  .hero h1 em{font-style:normal;color:#7fd7c4}
+  .hero p.sub{font-size:20px;color:#d7e3f2;margin:22px 0 32px;max-width:660px}
+  .hero .cta-row{display:flex;gap:14px;flex-wrap:wrap;align-items:center}
+  .hero .micro{margin-top:22px;font-size:14px;color:#b9cbe2}
+
+  /* logos strip */
+  .strip{background:var(--soft);padding:22px 0;border-bottom:1px solid var(--line)}
+  .strip p{text-align:center;color:var(--muted);font-size:14px;font-weight:600;letter-spacing:.5px}
+  .strip .names{display:flex;justify-content:center;gap:34px;flex-wrap:wrap;margin-top:10px;color:#7a8699;font-weight:700}
+
+  /* sections */
+  section{padding:78px 0}
+  .eyebrow{color:var(--blue);font-weight:700;letter-spacing:1px;text-transform:uppercase;font-size:13px;margin-bottom:10px}
+  h2{font-size:36px;font-weight:800;color:var(--navy);letter-spacing:-.6px;line-height:1.15}
+  .lead{color:var(--muted);font-size:18px;max-width:640px;margin-top:14px}
+
+  .pains{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:44px}
+  .pain{background:var(--soft);border:1px solid var(--line);border-radius:14px;padding:26px}
+  .pain h3{color:var(--navy);font-size:18px;margin-bottom:8px}
+  .pain p{color:var(--muted);font-size:15px}
+  @media(max-width:820px){.pains{grid-template-columns:1fr}}
+
+  .steps{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin-top:44px}
+  .step{position:relative;padding:26px 20px;border-radius:14px;background:#fff;border:1px solid var(--line)}
+  .step .n{width:38px;height:38px;border-radius:50%;background:var(--blue);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;margin-bottom:14px}
+  .step h3{font-size:16px;color:var(--navy);margin-bottom:6px}
+  .step p{font-size:14px;color:var(--muted)}
+  @media(max-width:820px){.steps{grid-template-columns:1fr 1fr}}
+  @media(max-width:520px){.steps{grid-template-columns:1fr}}
+
+  .services{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:44px}
+  .svc{border:1px solid var(--line);border-radius:14px;padding:26px;transition:.2s}
+  .svc:hover{border-color:var(--blue);box-shadow:0 10px 30px rgba(31,58,95,.08);transform:translateY(-2px)}
+  .svc .ic{font-size:26px}
+  .svc h3{color:var(--navy);font-size:18px;margin:12px 0 6px}
+  .svc p{color:var(--muted);font-size:15px}
+  @media(max-width:820px){.services{grid-template-columns:1fr}}
+
+  /* demo */
+  .demo{background:var(--navy);color:#fff;text-align:center}
+  .demo h2{color:#fff}
+  .demo .lead{color:#cdddf0;margin:14px auto 30px}
+  .videobox{max-width:760px;margin:0 auto;aspect-ratio:16/9;background:#0f2440;border:1px solid rgba(255,255,255,.15);border-radius:16px;display:flex;align-items:center;justify-content:center;color:#7fa3cc;font-size:15px}
+
+  /* pricing */
+  .tiers{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:44px}
+  .tier{border:1px solid var(--line);border-radius:16px;padding:30px 26px;background:#fff}
+  .tier.mid{border:2px solid var(--blue);box-shadow:0 16px 40px rgba(31,58,95,.1);position:relative}
+  .tier.mid:before{content:"Most popular";position:absolute;top:-13px;left:50%;transform:translateX(-50%);background:var(--blue);color:#fff;font-size:12px;font-weight:700;padding:5px 14px;border-radius:20px}
+  .tier h3{color:var(--navy);font-size:20px}
+  .tier .price{font-size:30px;font-weight:800;color:var(--navy);margin:10px 0 4px}
+  .tier .price small{font-size:15px;color:var(--muted);font-weight:600}
+  .tier ul{list-style:none;margin:18px 0 0}
+  .tier li{padding:7px 0 7px 26px;position:relative;color:var(--muted);font-size:15px}
+  .tier li:before{content:"\2713";position:absolute;left:0;color:var(--accent);font-weight:800}
+  @media(max-width:820px){.tiers{grid-template-columns:1fr}}
+
+  /* cta band */
+  .cta{background:linear-gradient(135deg,var(--blue),var(--navy));color:#fff;text-align:center;border-radius:20px;padding:56px 24px;margin:0 24px}
+  .cta h2{color:#fff}
+  .cta p{color:#d7e3f2;margin:12px 0 26px;font-size:18px}
+
+  footer{padding:40px 0;text-align:center;color:var(--muted);font-size:14px;border-top:1px solid var(--line);margin-top:60px}
+  footer .logo{font-size:18px;margin-bottom:8px}
+</style>
+</head>
+<body>
+
+<nav><div class="wrap">
+  <div class="logo">Realty<span>Sprint</span> AI</div>
+  <div class="navlinks">
+    <a href="#problem">Why</a>
+    <a href="#services">Services</a>
+    <a href="#pricing">Pricing</a>
+    <a class="btn" href="#contact">Book a call</a>
+  </div>
+</div></nav>
+
+<header class="hero"><div class="wrap">
+  <div class="badge">⚡ For Dubai &amp; Abu Dhabi brokerages</div>
+  <h1>Reply to every property lead in <em>under 5 minutes</em> — 24/7, automatically.</h1>
+  <p class="sub">RealtySprint AI answers, qualifies, and books your Bayut, Property Finder &amp; WhatsApp leads the moment they arrive — in English and Arabic — so your agents walk into booked viewings, not cold leads.</p>
+  <div class="cta-row">
+    <a class="btn" href="#contact">Get a free 15-min demo</a>
+    <a class="btn btn-ghost" href="#demo">Watch it work →</a>
+  </div>
+  <p class="micro">No extra staff. Live on your leads in 14 days.</p>
+</div></header>
+
+<div class="strip"><div class="wrap">
+  <p>BUILT FOR THE PORTALS YOUR BUYERS ALREADY USE</p>
+  <div class="names"><span>Bayut</span><span>Property Finder</span><span>Dubizzle</span><span>WhatsApp</span></div>
+</div></div>
+
+<section id="problem"><div class="wrap">
+  <div class="eyebrow">The problem</div>
+  <h2>Most leads die before an agent even replies.</h2>
+  <p class="lead">In Dubai's market, a buyer who waits more than a few minutes has already messaged three other agencies. Speed-to-lead is the whole game — and it's where most brokerages quietly lose deals.</p>
+  <div class="pains">
+    <div class="pain"><h3>⏰ Slow replies</h3><p>Leads arrive at midnight and on weekends. By the time an agent responds, the buyer is gone.</p></div>
+    <div class="pain"><h3>📥 Scattered leads</h3><p>Bayut, Property Finder, WhatsApp, Instagram — no single view, duplicates, and dropped follow-ups.</p></div>
+    <div class="pain"><h3>💸 No follow-up</h3><p>90% of leads aren't ready today and never get nurtured. That's where the lost commission hides.</p></div>
+  </div>
+</div></section>
+
+<section id="how" style="background:var(--soft)"><div class="wrap">
+  <div class="eyebrow">How it works</div>
+  <h2>From new lead to booked viewing — on autopilot.</h2>
+  <div class="steps">
+    <div class="step"><div class="n">1</div><h3>Lead arrives</h3><p>From any portal, ad, or WhatsApp — captured instantly.</p></div>
+    <div class="step"><div class="n">2</div><h3>AI replies &amp; qualifies</h3><p>In seconds, in the buyer's language — budget, area, timeline.</p></div>
+    <div class="step"><div class="n">3</div><h3>Books the viewing</h3><p>Offers slots, confirms, and sends reminders automatically.</p></div>
+    <div class="step"><div class="n">4</div><h3>Agent gets a hot lead</h3><p>A scored summary lands with your agent — ready to close.</p></div>
+  </div>
+</div></section>
+
+<section id="services"><div class="wrap">
+  <div class="eyebrow">What we build</div>
+  <h2>AI automation, tailored to real estate.</h2>
+  <div class="services">
+    <div class="svc"><div class="ic">💬</div><h3>AI Lead Qualification</h3><p>Every lead greeted and qualified on WhatsApp in seconds, then routed to the right agent.</p></div>
+    <div class="svc"><div class="ic">🌐</div><h3>24/7 Website Chatbot</h3><p>Answers listing questions after hours and captures the buyer before they bounce.</p></div>
+    <div class="svc"><div class="ic">🔁</div><h3>Follow-up Automation</h3><p>Keeps every not-ready lead warm with personalised listings until they transact.</p></div>
+    <div class="svc"><div class="ic">📅</div><h3>Booking &amp; Reminders</h3><p>Self-serve viewing bookings synced to your agents' calendars — fewer no-shows.</p></div>
+    <div class="svc"><div class="ic">📞</div><h3>Voice AI Receptionist</h3><p>Answers calls 24/7 in English &amp; Arabic, qualifies, and books callbacks.</p></div>
+    <div class="svc"><div class="ic">📊</div><h3>Owner Dashboard</h3><p>See lead volume, response speed, and conversion — live, every week.</p></div>
+  </div>
+</div></section>
+
+<section id="demo" class="demo"><div class="wrap">
+  <div class="eyebrow" style="color:#7fd7c4">See it live</div>
+  <h2>Watch an AI qualify a real estate lead in 60 seconds.</h2>
+  <p class="lead">A buyer messages at midnight — and walks away booked, with a scored summary sent to the agent.</p>
+  <div class="videobox">▶ Paste your Loom / YouTube demo embed here</div>
+</div></section>
+
+<section id="pricing"><div class="wrap">
+  <div class="eyebrow">Simple pricing</div>
+  <h2>Pick the package that fits your team.</h2>
+  <p class="lead">One-time setup to get you live, then a monthly retainer for hosting, monitoring, and optimisation.</p>
+  <div class="tiers">
+    <div class="tier"><h3>Starter</h3><div class="price">AED 1.5–3k<small>/mo</small></div><p style="color:var(--muted);font-size:14px">+ AED 3–5k setup</p>
+      <ul><li>AI lead qualification on WhatsApp</li><li>Instant replies, 24/7</li><li>Lead scoring + agent hand-off</li><li>Monthly report</li></ul></div>
+    <div class="tier mid"><h3>Growth</h3><div class="price">AED 4–7k<small>/mo</small></div><p style="color:var(--muted);font-size:14px">+ AED 6–12k setup</p>
+      <ul><li>Everything in Starter</li><li>Follow-up automation</li><li>Booking + reminders</li><li>CRM sync + dashboard</li><li>Monthly optimisation</li></ul></div>
+    <div class="tier"><h3>Scale</h3><div class="price">AED 8–18k<small>/mo</small></div><p style="color:var(--muted);font-size:14px">+ AED 15–30k setup</p>
+      <ul><li>Everything in Growth</li><li>Voice AI receptionist</li><li>Property recommendation AI</li><li>Priority support + strategy</li></ul></div>
+  </div>
+</div></section>
+
+<section id="contact"><div class="cta">
+  <h2>See it running on your leads.</h2>
+  <p>Book a free 15-minute call — I'll show you exactly how it'd work for your brokerage.</p>
+  <a class="btn btn-ghost" href="mailto:founder@realtysprint.ai?subject=RealtySprint%20AI%20demo">📩 founder@realtysprint.ai</a>
+</div></section>
+
+<footer><div class="wrap">
+  <div class="logo">Realty<span style="color:var(--blue)">Sprint</span> AI</div>
+  <p>AI automation for real estate — Dubai · Abu Dhabi · worldwide</p>
+  <p style="margin-top:6px">© 2026 RealtySprint AI · founder@realtysprint.ai</p>
+</div></footer>
+
+</body>
+</html>
