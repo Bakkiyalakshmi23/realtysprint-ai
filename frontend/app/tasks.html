@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Tasks — RealtySprint AI Workforce Control Center</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%232563EB'><path d='M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5'/></svg>">
+  <script src="../auth.js"></script>
+  <script>Auth.requireAuth();</script>
+</head>
+<body>
+
+  <!-- GLOBAL LEFT SIDEBAR -->
+  <aside class="app-sidebar" id="app-sidebar">
+    <div>
+      <div class="sidebar-header">
+        <a href="index.html" class="sidebar-brand">
+          <div class="brand-icon-box">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          </div>
+          <div>
+            Realty<span class="accent">Sprint</span>
+            <span class="sidebar-brand-subtitle">AI Workforce</span>
+          </div>
+        </a>
+      </div>
+
+      <nav class="sidebar-nav">
+        <a href="index.html" class="nav-item">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+          Overview
+        </a>
+        <a href="agents.html" class="nav-item">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          AI Agents
+        </a>
+        <a href="tasks.html" class="nav-item active">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+          Tasks
+          <span class="badge-count">24</span>
+        </a>
+        <a href="leads.html" class="nav-item">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+          Leads
+          <span class="badge-count">18</span>
+        </a>
+        <a href="approvals.html" class="nav-item">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          Approvals
+          <span class="badge-count" style="background: var(--amber-warning); color: var(--navy-dark);">3</span>
+        </a>
+        <a href="activity.html" class="nav-item">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+          Activity
+        </a>
+        <a href="settings.html" class="nav-item">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+          Settings
+        </a>
+        <a href="#" class="nav-item logout-action-btn" style="color: var(--red-danger); margin-top: 0.5rem;">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+          Logout
+        </a>
+      </nav>
+    </div>
+
+    <div class="sidebar-footer">
+      <div class="system-status-pill">
+        <span class="status-dot"></span>
+        System Status: All systems operational
+      </div>
+    </div>
+  </aside>
+
+  <!-- MAIN APP CONTENT -->
+  <div class="app-main">
+    <!-- Top Header Bar -->
+    <header class="app-header">
+      <div class="header-left">
+        <button class="mobile-menu-btn" id="mobile-sidebar-toggle" aria-label="Toggle Navigation">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        </button>
+        <div class="header-title-group">
+          <h1>AI Tasks Queue</h1>
+        </div>
+      </div>
+
+      <div class="header-right">
+        <button class="header-icon-btn" id="notification-bell-btn" aria-label="Notifications">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+          <span class="icon-badge"></span>
+        </button>
+
+        <div class="user-profile-widget logout-action-btn" title="Click to Sign Out" style="cursor: pointer;">
+          <div class="user-avatar">AD</div>
+          <div class="user-info">
+            <span class="user-name">Admin</span>
+            <span class="user-role">admin@realtysprint.ai</span>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Page Body Content -->
+    <div class="content-body">
+      <div class="page-intro-header">
+        <h2>AI Tasks Management</h2>
+        <p>Monitor, track, and filter execution tasks across Company PA Agent and Client Acquisition Agent.</p>
+      </div>
+
+      <!-- FILTER CONTROLS -->
+      <div class="filter-bar">
+        <button class="filter-btn active" data-filter="all">All Tasks (24)</button>
+        <button class="filter-btn" data-filter="Company PA">Company PA</button>
+        <button class="filter-btn" data-filter="Client Acquisition">Client Acquisition</button>
+        <button class="filter-btn" data-filter="Pending">Pending</button>
+        <button class="filter-btn" data-filter="In Progress">In Progress</button>
+        <button class="filter-btn" data-filter="Completed">Completed</button>
+        <button class="filter-btn" data-filter="Awaiting Approval">Awaiting Approval</button>
+      </div>
+
+      <!-- TASKS TABLE -->
+      <div class="panel-card" style="margin-bottom: 0;">
+        <div class="data-table-wrapper">
+          <table class="data-table filterable-table">
+            <thead>
+              <tr>
+                <th>Task Description</th>
+                <th>Assigned Agent</th>
+                <th>Priority</th>
+                <th>Status</th>
+                <th>Created</th>
+                <th>Updated</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr data-category="Company PA Completed">
+                <td style="font-weight: 700;">Prepare daily operations report</td>
+                <td><span class="agent-tag tag-pa">Company PA</span></td>
+                <td><span style="color: var(--amber-warning); font-weight: 700;">Medium</span></td>
+                <td><span class="status-badge completed">Completed</span></td>
+                <td>08:00 AM</td>
+                <td>09:15 AM</td>
+              </tr>
+              <tr data-category="Company PA In Progress">
+                <td style="font-weight: 700;">Review unallocated resources</td>
+                <td><span class="agent-tag tag-pa">Company PA</span></td>
+                <td><span style="color: var(--red-danger); font-weight: 700;">High</span></td>
+                <td><span class="status-badge in-progress">In Progress</span></td>
+                <td>09:00 AM</td>
+                <td>09:30 AM</td>
+              </tr>
+              <tr data-category="Client Acquisition Completed">
+                <td style="font-weight: 700;">Research Dubai property agencies</td>
+                <td><span class="agent-tag tag-acq">Client Acquisition</span></td>
+                <td><span style="color: var(--blue-primary); font-weight: 700;">Normal</span></td>
+                <td><span class="status-badge completed">Completed</span></td>
+                <td>07:30 AM</td>
+                <td>08:50 AM</td>
+              </tr>
+              <tr data-category="Client Acquisition Awaiting Approval">
+                <td style="font-weight: 700;">Prepare outreach drafts for ABC Properties</td>
+                <td><span class="agent-tag tag-acq">Client Acquisition</span></td>
+                <td><span style="color: var(--red-danger); font-weight: 700;">High</span></td>
+                <td><span class="status-badge awaiting">Awaiting Approval</span></td>
+                <td>09:10 AM</td>
+                <td>09:40 AM</td>
+              </tr>
+              <tr data-category="Company PA Pending">
+                <td style="font-weight: 700;">Prepare weekly KPI summary</td>
+                <td><span class="agent-tag tag-pa">Company PA</span></td>
+                <td><span style="color: var(--blue-primary); font-weight: 700;">Normal</span></td>
+                <td><span class="status-badge pending">Pending</span></td>
+                <td>09:30 AM</td>
+                <td>10:00 AM</td>
+              </tr>
+              <tr data-category="Client Acquisition Completed">
+                <td style="font-weight: 700;">Score newly ingested Bayut leads</td>
+                <td><span class="agent-tag tag-acq">Client Acquisition</span></td>
+                <td><span style="color: var(--red-danger); font-weight: 700;">High</span></td>
+                <td><span class="status-badge completed">Completed</span></td>
+                <td>08:15 AM</td>
+                <td>08:40 AM</td>
+              </tr>
+              <tr data-category="Company PA Awaiting Approval">
+                <td style="font-weight: 700;">Update operational assignment record</td>
+                <td><span class="agent-tag tag-pa">Company PA</span></td>
+                <td><span style="color: var(--amber-warning); font-weight: 700;">Medium</span></td>
+                <td><span class="status-badge awaiting">Awaiting Approval</span></td>
+                <td>08:50 AM</td>
+                <td>09:18 AM</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

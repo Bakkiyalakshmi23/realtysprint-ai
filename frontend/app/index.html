@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RealtySprint AI — AI Workforce Control Center</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%232563EB'><path d='M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5'/></svg>">
+  <script src="../auth.js"></script>
+  <script>Auth.requireAuth();</script>
+</head>
+<body>
+
+  <!-- GLOBAL LEFT SIDEBAR -->
+  <aside class="app-sidebar" id="app-sidebar">
+    <div>
+      <div class="sidebar-header">
+        <a href="index.html" class="sidebar-brand">
+          <div class="brand-icon-box">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          </div>
+          <div>
+            Realty<span class="accent">Sprint</span>
+            <span class="sidebar-brand-subtitle">AI Workforce</span>
+          </div>
+        </a>
+      </div>
+
+      <nav class="sidebar-nav">
+        <a href="index.html" class="nav-item active">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+          Overview
+        </a>
+        <a href="agents.html" class="nav-item">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          AI Agents
+        </a>
+        <a href="tasks.html" class="nav-item">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+          Tasks
+          <span class="badge-count">24</span>
+        </a>
+        <a href="leads.html" class="nav-item">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+          Leads
+          <span class="badge-count">18</span>
+        </a>
+        <a href="approvals.html" class="nav-item">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          Approvals
+          <span class="badge-count" style="background: var(--amber-warning); color: var(--navy-dark);">3</span>
+        </a>
+        <a href="activity.html" class="nav-item">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+          Activity
+        </a>
+        <a href="settings.html" class="nav-item">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+          Settings
+        </a>
+        <a href="#" class="nav-item logout-action-btn" style="color: var(--red-danger); margin-top: 0.5rem;">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+          Logout
+        </a>
+      </nav>
+    </div>
+
+    <div class="sidebar-footer">
+      <div class="system-status-pill">
+        <span class="status-dot"></span>
+        System Status: All systems operational
+      </div>
+    </div>
+  </aside>
+
+  <!-- MAIN APP CONTENT -->
+  <div class="app-main">
+    <!-- Top Header Bar -->
+    <header class="app-header">
+      <div class="header-left">
+        <button class="mobile-menu-btn" id="mobile-sidebar-toggle" aria-label="Toggle Navigation">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        </button>
+        <div class="header-title-group">
+          <h1>AI Workforce Control Center</h1>
+        </div>
+        <span class="header-status-indicator">
+          <span class="status-dot"></span>
+          System Online
+        </span>
+      </div>
+
+      <div class="header-right">
+        <button class="header-icon-btn" id="notification-bell-btn" aria-label="Notifications">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+          <span class="icon-badge"></span>
+        </button>
+
+        <div class="user-profile-widget logout-action-btn" title="Click to Sign Out" style="cursor: pointer;">
+          <div class="user-avatar">AD</div>
+          <div class="user-info">
+            <span class="user-name">Admin</span>
+            <span class="user-role">admin@realtysprint.ai</span>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Page Body Content -->
+    <div class="content-body">
+      <!-- Welcome Intro Header -->
+      <div class="page-intro-header">
+        <h2>Good morning, welcome to RealtySprint AI</h2>
+        <p>Your AI workforce is working across operations and client acquisition.</p>
+      </div>
+
+      <!-- 6 KPI CARDS -->
+      <section class="kpi-grid">
+        <!-- KPI 1 -->
+        <div class="kpi-card">
+          <span class="kpi-label">Active Agents</span>
+          <div class="kpi-value">2</div>
+          <span class="kpi-status-pill status-green">Both operational</span>
+        </div>
+
+        <!-- KPI 2 -->
+        <div class="kpi-card">
+          <span class="kpi-label">Tasks Today</span>
+          <div class="kpi-value">24</div>
+          <span class="kpi-status-pill status-blue">8 completed</span>
+        </div>
+
+        <!-- KPI 3 -->
+        <div class="kpi-card">
+          <span class="kpi-label">Pending Approvals</span>
+          <div class="kpi-value">3</div>
+          <span class="kpi-status-pill status-amber">Needs attention</span>
+        </div>
+
+        <!-- KPI 4 -->
+        <div class="kpi-card">
+          <span class="kpi-label">New Leads</span>
+          <div class="kpi-value">18</div>
+          <span class="kpi-status-pill status-green">Today</span>
+        </div>
+
+        <!-- KPI 5 -->
+        <div class="kpi-card">
+          <span class="kpi-label">Qualified Leads</span>
+          <div class="kpi-value">11</div>
+          <span class="kpi-status-pill status-green">61% qualification rate</span>
+        </div>
+
+        <!-- KPI 6 -->
+        <div class="kpi-card">
+          <span class="kpi-label">Agent Success Rate</span>
+          <div class="kpi-value">96.4%</div>
+          <span class="kpi-status-pill status-blue">Last 7 days</span>
+        </div>
+      </section>
+
+      <!-- TWO LARGE AI AGENT CARDS -->
+      <section class="agents-grid">
+        <!-- Agent 1: Company PA Agent -->
+        <div class="agent-card-large">
+          <div>
+            <div class="agent-header-row">
+              <div class="agent-title-box">
+                <div class="agent-avatar-icon">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                </div>
+                <div>
+                  <h3>Company PA Agent</h3>
+                  <span style="font-size: 0.8rem; color: var(--text-light);">Operations & Internal Workflow</span>
+                </div>
+              </div>
+              <span class="agent-online-pill"><span class="status-dot"></span> Online</span>
+            </div>
+
+            <p class="agent-desc">
+              Your internal AI operations assistant for tasks, KPIs, reporting, follow-ups, workload visibility, and operational coordination.
+            </p>
+
+            <div class="capabilities-section">
+              <div class="capabilities-title">Capabilities</div>
+              <div class="capabilities-pills">
+                <span class="cap-pill">Task Management</span>
+                <span class="cap-pill">KPI Monitoring</span>
+                <span class="cap-pill">Daily Reporting</span>
+                <span class="cap-pill">Follow-ups</span>
+                <span class="cap-pill">Workload Analysis</span>
+                <span class="cap-pill">Operational Insights</span>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <div class="agent-stats-strip">
+              <div class="agent-stat-item">
+                <span class="stat-item-label">Today's Tasks</span>
+                <span class="stat-item-val">14</span>
+              </div>
+              <div class="agent-stat-item">
+                <span class="stat-item-label">Completed</span>
+                <span class="stat-item-val" style="color: var(--green-light);">9</span>
+              </div>
+              <div class="agent-stat-item">
+                <span class="stat-item-label">Pending</span>
+                <span class="stat-item-val" style="color: var(--amber-warning);">5</span>
+              </div>
+            </div>
+
+            <div class="agent-actions-row">
+              <a href="agents.html" class="btn btn-primary btn-sm">Open Agent</a>
+              <a href="activity.html" class="btn btn-secondary btn-sm">View Activity</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Agent 2: Client Acquisition Agent -->
+        <div class="agent-card-large client-acq">
+          <div>
+            <div class="agent-header-row">
+              <div class="agent-title-box">
+                <div class="agent-avatar-icon">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><polyline points="17 11 19 13 23 9"/></svg>
+                </div>
+                <div>
+                  <h3>Client Acquisition Agent</h3>
+                  <span style="font-size: 0.8rem; color: var(--text-light);">Prospecting & Lead Qualification</span>
+                </div>
+              </div>
+              <span class="agent-online-pill"><span class="status-dot"></span> Online</span>
+            </div>
+
+            <p class="agent-desc">
+              Your AI prospecting assistant for discovering, researching, qualifying, scoring, and organizing real-estate opportunities.
+            </p>
+
+            <div class="capabilities-section">
+              <div class="capabilities-title">Capabilities</div>
+              <div class="capabilities-pills">
+                <span class="cap-pill">Prospect Research</span>
+                <span class="cap-pill">Lead Qualification</span>
+                <span class="cap-pill">Lead Scoring</span>
+                <span class="cap-pill">Company Research</span>
+                <span class="cap-pill">Outreach Drafts</span>
+                <span class="cap-pill">Pipeline Tracking</span>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <div class="agent-stats-strip">
+              <div class="agent-stat-item">
+                <span class="stat-item-label">New Prospects</span>
+                <span class="stat-item-val">18</span>
+              </div>
+              <div class="agent-stat-item">
+                <span class="stat-item-label">Qualified</span>
+                <span class="stat-item-val" style="color: var(--green-light);">11</span>
+              </div>
+              <div class="agent-stat-item">
+                <span class="stat-item-label">Awaiting Approval</span>
+                <span class="stat-item-val" style="color: var(--amber-warning);">3</span>
+              </div>
+            </div>
+
+            <div class="agent-actions-row">
+              <a href="agents.html" class="btn btn-primary btn-sm">Open Agent</a>
+              <a href="leads.html" class="btn btn-secondary btn-sm">View Leads</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SPLIT ROW: TODAY'S AI WORK & PENDING APPROVALS -->
+      <div class="dashboard-grid-2col">
+        <!-- Left: Today's AI Work -->
+        <div class="panel-card" style="margin-bottom: 0;">
+          <div class="panel-header">
+            <h3 class="panel-title">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--blue-primary)" stroke-width="2"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+              Today's AI Work
+            </h3>
+            <a href="tasks.html" style="font-size: 0.85rem; font-weight: 700; color: var(--blue-primary);">View All Tasks &rarr;</a>
+          </div>
+
+          <div class="data-table-wrapper">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Agent</th>
+                  <th>Task Description</th>
+                  <th>Status</th>
+                  <th>Time</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><span class="agent-tag tag-pa">Company PA</span></td>
+                  <td>Prepare daily operations report</td>
+                  <td><span class="status-badge completed">Completed</span></td>
+                  <td style="font-size: 0.8rem; color: var(--text-muted);">09:15 AM</td>
+                </tr>
+                <tr>
+                  <td><span class="agent-tag tag-pa">Company PA</span></td>
+                  <td>Review unallocated resources</td>
+                  <td><span class="status-badge in-progress">In Progress</span></td>
+                  <td style="font-size: 0.8rem; color: var(--text-muted);">09:30 AM</td>
+                </tr>
+                <tr>
+                  <td><span class="agent-tag tag-acq">Client Acquisition</span></td>
+                  <td>Research Dubai property agencies</td>
+                  <td><span class="status-badge completed">Completed</span></td>
+                  <td style="font-size: 0.8rem; color: var(--text-muted);">08:50 AM</td>
+                </tr>
+                <tr>
+                  <td><span class="agent-tag tag-acq">Client Acquisition</span></td>
+                  <td>Prepare outreach drafts</td>
+                  <td><span class="status-badge awaiting">Awaiting Approval</span></td>
+                  <td style="font-size: 0.8rem; color: var(--text-muted);">09:40 AM</td>
+                </tr>
+                <tr>
+                  <td><span class="agent-tag tag-pa">Company PA</span></td>
+                  <td>Prepare weekly KPI summary</td>
+                  <td><span class="status-badge pending">Pending</span></td>
+                  <td style="font-size: 0.8rem; color: var(--text-muted);">10:00 AM</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Right: Requires Your Approval -->
+        <div class="panel-card" style="margin-bottom: 0;">
+          <div class="panel-header">
+            <h3 class="panel-title">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--amber-warning)" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+              Requires Your Approval
+            </h3>
+            <a href="approvals.html" style="font-size: 0.85rem; font-weight: 700; color: var(--blue-primary);">View All (3) &rarr;</a>
+          </div>
+
+          <div class="approvals-stack">
+            <!-- Approval 1 -->
+            <div class="approval-card-item">
+              <div class="approval-meta-row">
+                <span class="agent-tag tag-acq">Client Acquisition Agent</span>
+                <span class="status-badge awaiting">Awaiting approval</span>
+              </div>
+              <div class="approval-action-title">Outreach draft for ABC Properties</div>
+              <div class="approval-details-text">Type: External communication • Risk: Medium</div>
+              <div class="approval-buttons-group">
+                <a href="approvals.html" class="btn btn-outline btn-sm">Review</a>
+                <button class="btn btn-success btn-sm action-approve-btn">Approve</button>
+                <button class="btn btn-danger btn-sm action-reject-btn">Reject</button>
+              </div>
+            </div>
+
+            <!-- Approval 2 -->
+            <div class="approval-card-item">
+              <div class="approval-meta-row">
+                <span class="agent-tag tag-pa">Company PA Agent</span>
+                <span class="status-badge awaiting">Awaiting approval</span>
+              </div>
+              <div class="approval-action-title">Update operational assignment</div>
+              <div class="approval-details-text">Type: Internal record update • Risk: Low</div>
+              <div class="approval-buttons-group">
+                <a href="approvals.html" class="btn btn-outline btn-sm">Review</a>
+                <button class="btn btn-success btn-sm action-approve-btn">Approve</button>
+                <button class="btn btn-danger btn-sm action-reject-btn">Reject</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- RECENT AGENT ACTIVITY -->
+      <section class="panel-card" style="margin-top: 2rem; margin-bottom: 0;">
+        <div class="panel-header">
+          <h3 class="panel-title">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--blue-primary)" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+            Recent Agent Activity
+          </h3>
+          <a href="activity.html" style="font-size: 0.85rem; font-weight: 700; color: var(--blue-primary);">Full Stream &rarr;</a>
+        </div>
+
+        <div class="activity-feed-list">
+          <div class="activity-feed-item">
+            <div class="activity-time-col">09:42</div>
+            <div class="activity-dot-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></div>
+            <div class="activity-info">
+              <h5>Company PA Agent</h5>
+              <p>Completed daily KPI analysis and updated team dashboard metrics.</p>
+            </div>
+          </div>
+
+          <div class="activity-feed-item">
+            <div class="activity-time-col">09:36</div>
+            <div class="activity-dot-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></div>
+            <div class="activity-info">
+              <h5>Client Acquisition Agent</h5>
+              <p>Qualified 4 new prospects from Bayut & Property Finder inquiries (Dubai Marina & Downtown).</p>
+            </div>
+          </div>
+
+          <div class="activity-feed-item">
+            <div class="activity-time-col">09:18</div>
+            <div class="activity-dot-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></div>
+            <div class="activity-info">
+              <h5>Company PA Agent</h5>
+              <p>Detected 2 unallocated resources in scheduled viewing calendar.</p>
+            </div>
+          </div>
+
+          <div class="activity-feed-item">
+            <div class="activity-time-col">08:55</div>
+            <div class="activity-dot-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></div>
+            <div class="activity-info">
+              <h5>Client Acquisition Agent</h5>
+              <p>Completed research on 12 new Dubai property agencies and scored lead viability.</p>
+            </div>
+          </div>
+
+          <div class="activity-feed-item">
+            <div class="activity-time-col">08:30</div>
+            <div class="activity-dot-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></div>
+            <div class="activity-info">
+              <h5>Company PA Agent</h5>
+              <p>Generated daily operations summary report for management review.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

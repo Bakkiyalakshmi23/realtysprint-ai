@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign In — RealtySprint AI Workforce Control Center</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%232563EB'><path d='M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5'/></svg>">
+  <style>
+    /* Dedicated Page Layout for Login Screen */
+    body.login-page-body {
+      background: radial-gradient(circle at 50% 0%, rgba(37, 99, 235, 0.12) 0%, rgba(15, 23, 42, 0.03) 70%), #F8FAFC;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 1.5rem;
+    }
+
+    .login-container {
+      width: 100%;
+      max-width: 440px;
+    }
+
+    .login-card {
+      background: #FFFFFF;
+      border-radius: 20px;
+      padding: 2.75rem 2.25rem;
+      border: 1px solid #E2E8F0;
+      box-shadow: 0 20px 35px -10px rgba(15, 23, 42, 0.1);
+    }
+
+    .login-header-brand {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.75rem;
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: #0F172A;
+      margin-bottom: 1.75rem;
+      text-decoration: none;
+    }
+
+    .login-brand-icon {
+      width: 42px;
+      height: 42px;
+      background: linear-gradient(135deg, #0F172A 0%, #2563EB 100%);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #34D399;
+      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
+    }
+
+    .login-title-wrap {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .login-title-wrap h1 {
+      font-size: 1.75rem;
+      font-weight: 800;
+      color: #0F172A;
+      margin-bottom: 0.35rem;
+    }
+
+    .login-title-wrap p {
+      font-size: 0.95rem;
+      color: #64748B;
+    }
+
+    .demo-credentials-banner {
+      background: #ECFDF5;
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      border-radius: 10px;
+      padding: 0.85rem 1rem;
+      margin-bottom: 1.5rem;
+      font-size: 0.825rem;
+      color: #065F46;
+    }
+
+    .demo-credentials-banner strong {
+      display: block;
+      margin-bottom: 0.2rem;
+      font-size: 0.85rem;
+      color: #047857;
+    }
+
+    .form-field {
+      margin-bottom: 1.25rem;
+    }
+
+    .form-field label {
+      display: block;
+      font-size: 0.875rem;
+      font-weight: 700;
+      color: #0F172A;
+      margin-bottom: 0.4rem;
+    }
+
+    .form-input {
+      width: 100%;
+      padding: 0.85rem 1rem;
+      border-radius: 10px;
+      border: 1.5px solid #E2E8F0;
+      background: #F8FAFC;
+      font-size: 0.95rem;
+      color: #0F172A;
+      transition: all 0.2s ease;
+    }
+
+    .form-input:focus {
+      outline: none;
+      border-color: #2563EB;
+      background: #FFFFFF;
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+    }
+
+    .form-row-between {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1.5rem;
+      font-size: 0.875rem;
+    }
+
+    .checkbox-label {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: #475569;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .forgot-link {
+      color: #2563EB;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .forgot-link:hover {
+      text-decoration: underline;
+    }
+
+    .login-error-alert {
+      display: none;
+      background: #FEF2F2;
+      border: 1px solid rgba(239, 68, 68, 0.3);
+      color: #DC2626;
+      padding: 0.75rem 1rem;
+      border-radius: 10px;
+      font-size: 0.875rem;
+      font-weight: 600;
+      margin-bottom: 1.25rem;
+      text-align: center;
+    }
+
+    .back-home-link {
+      display: block;
+      text-align: center;
+      margin-top: 1.75rem;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: #64748B;
+    }
+
+    .back-home-link:hover {
+      color: #2563EB;
+    }
+  </style>
+</head>
+<body class="login-page-body">
+
+  <div class="login-container">
+    <div class="login-card">
+      <!-- Brand Logo -->
+      <a href="index.html" class="login-header-brand">
+        <div class="login-brand-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        </div>
+        Realty<span style="color: #2563EB;">Sprint</span> <span style="font-size: 0.65rem; background: #ECFDF5; color: #10B981; border: 1px solid rgba(16, 185, 129, 0.3); padding: 0.15rem 0.45rem; border-radius: 6px; vertical-align: super;">AI</span>
+      </a>
+
+      <!-- Title & Subtitle -->
+      <div class="login-title-wrap">
+        <h1>Welcome back</h1>
+        <p>Sign in to your AI Workforce Control Center.</p>
+      </div>
+
+      <!-- Demo Credentials Banner -->
+      <div class="demo-credentials-banner">
+        <strong>🔑 DEMO Credentials:</strong>
+        Email: <code>admin@realtysprint.ai</code><br>
+        Password: <code>DemoOnly123!</code>
+      </div>
+
+      <!-- Error Alert Box -->
+      <div id="login-error-alert" class="login-error-alert"></div>
+
+      <!-- Sign-In Form -->
+      <form id="login-form" onsubmit="handleLoginSubmit(event)">
+        <div class="form-field">
+          <label for="email-input">Email Address</label>
+          <input type="email" id="email-input" class="form-input" placeholder="admin@realtysprint.ai" value="admin@realtysprint.ai" required>
+        </div>
+
+        <div class="form-field">
+          <label for="password-input">Password</label>
+          <input type="password" id="password-input" class="form-input" placeholder="••••••••••••" value="DemoOnly123!" required>
+        </div>
+
+        <div class="form-row-between">
+          <label class="checkbox-label">
+            <input type="checkbox" id="remember-me" checked>
+            Remember me
+          </label>
+          <a href="#" class="forgot-link" onclick="handleForgotPassword(event)">Forgot password?</a>
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-lg" style="width: 100%;" id="login-submit-btn">
+          Sign In
+        </button>
+      </form>
+    </div>
+
+    <!-- Back link to public website -->
+    <a href="index.html" class="back-home-link">&larr; Back to RealtySprint AI</a>
+  </div>
+
+  <!-- Auth Script -->
+  <script src="auth.js"></script>
+  <script>
+    // Redirect if already authenticated
+    if (Auth.isAuthenticated()) {
+      window.location.href = 'app/index.html';
+    }
+
+    function handleLoginSubmit(e) {
+      e.preventDefault();
+      const email = document.getElementById('email-input').value;
+      const password = document.getElementById('password-input').value;
+      const errorAlert = document.getElementById('login-error-alert');
+      const submitBtn = document.getElementById('login-submit-btn');
+
+      if (errorAlert) errorAlert.style.display = 'none';
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.innerText = 'Signing in...';
+      }
+
+      setTimeout(() => {
+        const result = Auth.login(email, password);
+        if (result.success) {
+          window.location.href = 'app/index.html';
+        } else {
+          if (errorAlert) {
+            errorAlert.innerText = result.error || 'Invalid email or password.';
+            errorAlert.style.display = 'block';
+          }
+          if (submitBtn) {
+            submitBtn.disabled = false;
+            submitBtn.innerText = 'Sign In';
+          }
+        }
+      }, 300);
+    }
+
+    function handleForgotPassword(e) {
+      e.preventDefault();
+      alert('Password recovery will be available when the production authentication service is connected.');
+    }
+  </script>
+</body>
+</html>
