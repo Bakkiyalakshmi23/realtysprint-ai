@@ -1001,6 +1001,26 @@ button, input, select, textarea {
   box-shadow: 0 0 0 3px var(--blue-glow);
 }
 
+.founder-agent-panel .agent-actions-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+}
+
+.agent-run-output {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  max-height: 28rem;
+  overflow: auto;
+  margin-top: 1rem;
+  padding: 1rem;
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-md);
+  background: var(--bg-app);
+  color: var(--navy-dark);
+  font: 0.85rem/1.55 ui-monospace, SFMono-Regular, Consolas, monospace;
+}
+
 /* Mobile & Screen Responsiveness */
 @media (max-width: 1280px) {
   .kpi-grid {

@@ -10,6 +10,10 @@ const taskRoutes = require('./routes/tasks');
 const leadRoutes = require('./routes/leads');
 const approvalRoutes = require('./routes/approvals');
 const activityRoutes = require('./routes/activity');
+const agentExecuteRoutes = require('./routes/agentExecute');
+const businessRoutes = require('./routes/business');
+const aiRoutes = require('./routes/ai');
+const clientRoutes = require('./routes/clients');
 
 const app = express();
 
@@ -22,11 +26,15 @@ app.use(express.json());
 
 // API Routes Registration
 app.use('/api/health', healthRoutes);
+app.use('/api/ai', aiRoutes);
+app.use('/api/business', businessRoutes);
+app.use('/api/agents', agentExecuteRoutes);
 app.use('/api/agents', agentRoutes);
 app.use('/api/tasks', taskRoutes);
 app.use('/api/leads', leadRoutes);
 app.use('/api/approvals', approvalRoutes);
 app.use('/api/activity', activityRoutes);
+app.use('/api/clients', clientRoutes);
 
 // 404 Route Handler for undefined endpoints
 app.use((req, res, next) => {
@@ -39,13 +47,15 @@ app.use((req, res, next) => {
 app.use(errorHandler);
 
 // Server startup
-const PORT = config.port;
-app.listen(PORT, () => {
-  console.log(`==========================================`);
-  console.log(`🚀 RealtySprint AI Backend API Online`);
-  console.log(`📍 Environment: ${config.env}`);
-  console.log(`🌐 Listening on: http://localhost:${PORT}`);
-  console.log(`==========================================`);
-});
+if (require.main === module) {
+  const PORT = config.port;
+  app.listen(PORT, () => {
+    console.log(`==========================================`);
+    console.log(`🚀 RealtySprint AI Backend API Online`);
+    console.log(`📍 Environment: ${config.env}`);
+    console.log(`🌐 Listening on: http://localhost:${PORT}`);
+    console.log(`==========================================`);
+  });
+}
 
 module.exports = app;

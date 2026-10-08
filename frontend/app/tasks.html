@@ -40,6 +40,10 @@
           Tasks
           <span class="badge-count">24</span>
         </a>
+        <a href="clients.html" class="nav-item">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          Clients
+        </a>
         <a href="leads.html" class="nav-item">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
           Leads
@@ -107,11 +111,12 @@
       <div class="page-intro-header">
         <h2>AI Tasks Management</h2>
         <p>Monitor, track, and filter execution tasks across Company PA Agent and Client Acquisition Agent.</p>
+        <span id="tasks-source-badge"></span>
       </div>
 
       <!-- FILTER CONTROLS -->
       <div class="filter-bar">
-        <button class="filter-btn active" data-filter="all">All Tasks (24)</button>
+        <button class="filter-btn active" id="tasks-filter-count" data-filter="all">All Tasks</button>
         <button class="filter-btn" data-filter="Company PA">Company PA</button>
         <button class="filter-btn" data-filter="Client Acquisition">Client Acquisition</button>
         <button class="filter-btn" data-filter="Pending">Pending</button>
@@ -121,7 +126,7 @@
       </div>
 
       <!-- TASKS TABLE -->
-      <div class="panel-card" style="margin-bottom: 0;">
+        <div class="panel-card" style="margin-bottom: 0;">
         <div class="data-table-wrapper">
           <table class="data-table filterable-table">
             <thead>
@@ -134,7 +139,7 @@
                 <th>Updated</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody id="tasks-tbody">
               <tr data-category="Company PA Completed">
                 <td style="font-weight: 700;">Prepare daily operations report</td>
                 <td><span class="agent-tag tag-pa">Company PA</span></td>

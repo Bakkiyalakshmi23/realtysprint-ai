@@ -8,6 +8,7 @@
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%232563EB'><path d='M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5'/></svg>">
   <script src="../auth.js"></script>
   <script>Auth.requireAuth();</script>
+  <script src="api.js"></script>
 </head>
 <body>
 
@@ -39,6 +40,10 @@
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
           Tasks
           <span class="badge-count">24</span>
+        </a>
+        <a href="clients.html" class="nav-item">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          Clients
         </a>
         <a href="leads.html" class="nav-item">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
@@ -108,6 +113,32 @@
 
     <!-- Page Body Content -->
     <div class="content-body">
+      <section class="panel-card founder-agent-panel">
+        <div class="panel-header">
+          <h3 class="panel-title">Company PA · Founder Briefing</h3>
+          <span id="ai-provider-status" class="kpi-status-pill status-blue">Checking AI provider…</span>
+        </div>
+        <p style="color:var(--text-muted);margin:0 0 1rem">Run a deterministic DEMO report or request structured AI analysis. AI output is advisory and never approves or sends anything.</p>
+        <label style="display:flex;align-items:center;gap:.5rem;margin-bottom:1rem;font-size:.9rem"><input type="checkbox" id="use-ai-analysis"> Use configured OpenAI analysis for this request</label>
+        <div class="agent-actions-row">
+          <button class="btn btn-primary btn-sm" data-agent="company-pa" data-action="generate_report">Today's Company Report</button>
+          <button class="btn btn-secondary btn-sm" data-agent="company-pa" data-action="check_performance">Acquisition Performance</button>
+          <button class="btn btn-secondary btn-sm" data-agent="company-pa" data-action="identify_priorities">Company Priorities</button>
+        </div>
+        <div id="agent-run-status" role="status" aria-live="polite" style="margin-top:1rem;color:var(--text-muted)"></div>
+        <pre id="agent-run-output" class="agent-run-output" hidden></pre>
+      </section>
+
+      <section class="panel-card" style="margin-top:1rem">
+        <div class="panel-header"><h3 class="panel-title">Revenue & Delivery Snapshot</h3><span id="business-data-source"></span></div>
+        <div class="agent-stats-strip">
+          <div class="agent-stat-item"><span class="stat-item-label">Actual Revenue</span><span class="stat-item-val" id="business-revenue-actual">—</span></div>
+          <div class="agent-stat-item"><span class="stat-item-label">Expected Contract Value</span><span class="stat-item-val" id="business-revenue-expected">—</span></div>
+          <div class="agent-stat-item"><span class="stat-item-label">₹50L Target Progress</span><span class="stat-item-val" id="business-target-progress">—</span></div>
+          <div class="agent-stat-item"><span class="stat-item-label">Delivery</span><span class="stat-item-val" id="business-delivery-status">—</span></div>
+        </div>
+      </section>
+
       <!-- Welcome Intro Header -->
       <div class="page-intro-header">
         <h2>Good morning, welcome to RealtySprint AI</h2>
@@ -119,36 +150,36 @@
         <!-- KPI 1 -->
         <div class="kpi-card">
           <span class="kpi-label">Active Agents</span>
-          <div class="kpi-value">2</div>
+          <div class="kpi-value" id="kpi-active-agents">—</div>
           <span class="kpi-status-pill status-green">Both operational</span>
         </div>
 
         <!-- KPI 2 -->
         <div class="kpi-card">
           <span class="kpi-label">Tasks Today</span>
-          <div class="kpi-value">24</div>
-          <span class="kpi-status-pill status-blue">8 completed</span>
+          <div class="kpi-value" id="kpi-tasks-today">—</div>
+          <span class="kpi-status-pill status-blue">From API</span>
         </div>
 
         <!-- KPI 3 -->
         <div class="kpi-card">
           <span class="kpi-label">Pending Approvals</span>
-          <div class="kpi-value">3</div>
+          <div class="kpi-value" id="kpi-pending-approvals">—</div>
           <span class="kpi-status-pill status-amber">Needs attention</span>
         </div>
 
         <!-- KPI 4 -->
         <div class="kpi-card">
           <span class="kpi-label">New Leads</span>
-          <div class="kpi-value">18</div>
-          <span class="kpi-status-pill status-green">Today</span>
+          <div class="kpi-value" id="kpi-new-leads">—</div>
+          <span class="kpi-status-pill status-green">From API</span>
         </div>
 
         <!-- KPI 5 -->
         <div class="kpi-card">
           <span class="kpi-label">Qualified Leads</span>
-          <div class="kpi-value">11</div>
-          <span class="kpi-status-pill status-green">61% qualification rate</span>
+          <div class="kpi-value" id="kpi-qualified-leads">—</div>
+          <span class="kpi-status-pill status-green">Qualification rate</span>
         </div>
 
         <!-- KPI 6 -->
@@ -283,7 +314,10 @@
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--blue-primary)" stroke-width="2"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
               Today's AI Work
             </h3>
-            <a href="tasks.html" style="font-size: 0.85rem; font-weight: 700; color: var(--blue-primary);">View All Tasks &rarr;</a>
+            <div style="display:flex;align-items:center;gap:0.75rem">
+              <span id="dashboard-source-badge"></span>
+              <a href="tasks.html" style="font-size: 0.85rem; font-weight: 700; color: var(--blue-primary);">View All Tasks &rarr;</a>
+            </div>
           </div>
 
           <div class="data-table-wrapper">
@@ -296,37 +330,8 @@
                   <th>Time</th>
                 </tr>
               </thead>
-              <tbody>
-                <tr>
-                  <td><span class="agent-tag tag-pa">Company PA</span></td>
-                  <td>Prepare daily operations report</td>
-                  <td><span class="status-badge completed">Completed</span></td>
-                  <td style="font-size: 0.8rem; color: var(--text-muted);">09:15 AM</td>
-                </tr>
-                <tr>
-                  <td><span class="agent-tag tag-pa">Company PA</span></td>
-                  <td>Review unallocated resources</td>
-                  <td><span class="status-badge in-progress">In Progress</span></td>
-                  <td style="font-size: 0.8rem; color: var(--text-muted);">09:30 AM</td>
-                </tr>
-                <tr>
-                  <td><span class="agent-tag tag-acq">Client Acquisition</span></td>
-                  <td>Research Dubai property agencies</td>
-                  <td><span class="status-badge completed">Completed</span></td>
-                  <td style="font-size: 0.8rem; color: var(--text-muted);">08:50 AM</td>
-                </tr>
-                <tr>
-                  <td><span class="agent-tag tag-acq">Client Acquisition</span></td>
-                  <td>Prepare outreach drafts</td>
-                  <td><span class="status-badge awaiting">Awaiting Approval</span></td>
-                  <td style="font-size: 0.8rem; color: var(--text-muted);">09:40 AM</td>
-                </tr>
-                <tr>
-                  <td><span class="agent-tag tag-pa">Company PA</span></td>
-                  <td>Prepare weekly KPI summary</td>
-                  <td><span class="status-badge pending">Pending</span></td>
-                  <td style="font-size: 0.8rem; color: var(--text-muted);">10:00 AM</td>
-                </tr>
+              <tbody id="dashboard-tasks-tbody">
+                <tr><td colspan="4" style="text-align:center;color:var(--text-muted);padding:1.5rem">Loading…</td></tr>
               </tbody>
             </table>
           </div>
@@ -339,39 +344,11 @@
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--amber-warning)" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
               Requires Your Approval
             </h3>
-            <a href="approvals.html" style="font-size: 0.85rem; font-weight: 700; color: var(--blue-primary);">View All (3) &rarr;</a>
+            <a href="approvals.html" id="dashboard-approvals-view-all" style="font-size: 0.85rem; font-weight: 700; color: var(--blue-primary);">View All &rarr;</a>
           </div>
 
-          <div class="approvals-stack">
-            <!-- Approval 1 -->
-            <div class="approval-card-item">
-              <div class="approval-meta-row">
-                <span class="agent-tag tag-acq">Client Acquisition Agent</span>
-                <span class="status-badge awaiting">Awaiting approval</span>
-              </div>
-              <div class="approval-action-title">Outreach draft for ABC Properties</div>
-              <div class="approval-details-text">Type: External communication • Risk: Medium</div>
-              <div class="approval-buttons-group">
-                <a href="approvals.html" class="btn btn-outline btn-sm">Review</a>
-                <button class="btn btn-success btn-sm action-approve-btn">Approve</button>
-                <button class="btn btn-danger btn-sm action-reject-btn">Reject</button>
-              </div>
-            </div>
-
-            <!-- Approval 2 -->
-            <div class="approval-card-item">
-              <div class="approval-meta-row">
-                <span class="agent-tag tag-pa">Company PA Agent</span>
-                <span class="status-badge awaiting">Awaiting approval</span>
-              </div>
-              <div class="approval-action-title">Update operational assignment</div>
-              <div class="approval-details-text">Type: Internal record update • Risk: Low</div>
-              <div class="approval-buttons-group">
-                <a href="approvals.html" class="btn btn-outline btn-sm">Review</a>
-                <button class="btn btn-success btn-sm action-approve-btn">Approve</button>
-                <button class="btn btn-danger btn-sm action-reject-btn">Reject</button>
-              </div>
-            </div>
+          <div class="approvals-stack" id="dashboard-approvals-mini">
+            <div style="padding:1.5rem;text-align:center;color:var(--text-muted);font-size:0.9rem">Loading…</div>
           </div>
         </div>
       </div>
@@ -386,51 +363,8 @@
           <a href="activity.html" style="font-size: 0.85rem; font-weight: 700; color: var(--blue-primary);">Full Stream &rarr;</a>
         </div>
 
-        <div class="activity-feed-list">
-          <div class="activity-feed-item">
-            <div class="activity-time-col">09:42</div>
-            <div class="activity-dot-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></div>
-            <div class="activity-info">
-              <h5>Company PA Agent</h5>
-              <p>Completed daily KPI analysis and updated team dashboard metrics.</p>
-            </div>
-          </div>
-
-          <div class="activity-feed-item">
-            <div class="activity-time-col">09:36</div>
-            <div class="activity-dot-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></div>
-            <div class="activity-info">
-              <h5>Client Acquisition Agent</h5>
-              <p>Qualified 4 new prospects from Bayut & Property Finder inquiries (Dubai Marina & Downtown).</p>
-            </div>
-          </div>
-
-          <div class="activity-feed-item">
-            <div class="activity-time-col">09:18</div>
-            <div class="activity-dot-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></div>
-            <div class="activity-info">
-              <h5>Company PA Agent</h5>
-              <p>Detected 2 unallocated resources in scheduled viewing calendar.</p>
-            </div>
-          </div>
-
-          <div class="activity-feed-item">
-            <div class="activity-time-col">08:55</div>
-            <div class="activity-dot-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></div>
-            <div class="activity-info">
-              <h5>Client Acquisition Agent</h5>
-              <p>Completed research on 12 new Dubai property agencies and scored lead viability.</p>
-            </div>
-          </div>
-
-          <div class="activity-feed-item">
-            <div class="activity-time-col">08:30</div>
-            <div class="activity-dot-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></div>
-            <div class="activity-info">
-              <h5>Company PA Agent</h5>
-              <p>Generated daily operations summary report for management review.</p>
-            </div>
-          </div>
+        <div class="activity-feed-list" id="dashboard-activity-feed">
+          <div style="padding:1.5rem;text-align:center;color:var(--text-muted);font-size:0.9rem">Loading…</div>
         </div>
       </section>
     </div>
