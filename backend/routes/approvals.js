@@ -8,10 +8,10 @@ const express    = require('express');
 const router     = express.Router();
 const { pool }   = require('../db/pool');
 const { getApprovals } = require('../services/demoData');
-const { requireDemoAuth } = require('../middleware/demoAuth');
+const { requireAuth } = require('../middleware/authMiddleware');
 const { reviewApproval } = require('../services/workflows');
 
-router.get('/', requireDemoAuth, async (req, res, next) => {
+router.get('/', requireAuth, async (req, res, next) => {
   try {
     const result = await pool.query(`
       SELECT
@@ -41,12 +41,12 @@ router.get('/', requireDemoAuth, async (req, res, next) => {
     });
   } catch (err) {
     console.warn('[approvals] DB unavailable, serving demo data:', err.message);
-    const data = getApprovals();
+    const data = getApprovals().map(a => ({ ...a, actionType: a.actionType || a.action }));
     return res.json({ success: true, source: 'demo', count: data.length, data });
   }
 });
 
-router.post('/:id/review', requireDemoAuth, async (req, res) => {
+router.post('/:id/review', requireAuth, async (req, res) => {
   const decision = req.body?.decision;
   if (!['approve', 'reject'].includes(decision)) {
     return res.status(400).json({ success: false, error: 'decision must be "approve" or "reject".' });
@@ -54,6 +54,22 @@ router.post('/:id/review', requireDemoAuth, async (req, res) => {
   const result = await reviewApproval(req.params.id, decision);
   if (!result) return res.status(404).json({ success: false, error: 'Pending approval not found.' });
   return res.json({ success: true, data: result, communicationSent: false });
+});
+
+router.post('/:id/dispatch', requireAuth, async (req, res) => {
+  const { dispatchApprovedDraft } = require('../services/dispatchService');
+  const { recipient, subject, body } = req.body;
+  try {
+    const result = await dispatchApprovedDraft({
+      approvalId: req.params.id,
+      expectedRecipient: recipient,
+      expectedSubject: subject,
+      expectedBody: body
+    });
+    return res.json({ success: true, dispatchId: result.dispatchId, status: result.status, provider_message_id: result.provider_message_id });
+  } catch (err) {
+    return res.status(400).json({ success: false, error: err.message });
+  }
 });
 
 module.exports = router;

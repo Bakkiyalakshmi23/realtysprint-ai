@@ -1,34 +1,31 @@
 /**
  * RealtySprint AI - Authentication Helper Module (frontend/auth.js)
- * 
- * IMPORTANT SECURITY NOTICE:
- * This module implements a DEMO-ONLY authentication mechanism for development preview.
- * It uses localStorage for session persistence and validates against fixed demo credentials.
- * DO NOT USE THIS FOR PRODUCTION SECURITY.
+ *
+ * Handles client-side authentication state, session storage, and route protection.
+ * Communicates with the backend API (/api/auth/login) for authentication.
  */
 
+// Determine API base URL dynamically based on environment
+const isLocal = typeof window !== 'undefined' && (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1');
+const API_BASE_URL = isLocal ? 'http://localhost:4000' : "https://api.realitysprint.co.in";
+
 const Auth = (function () {
-  // Demo credentials configuration
-  const DEMO_CONFIG = {
-    EMAIL: 'admin@realtysprint.ai',
-    PASSWORD: 'DemoOnly123!',
-    SESSION_KEY: 'realtysprint_demo_session',
-    USER: {
-      name: 'Admin',
-      email: 'admin@realtysprint.ai',
-      role: 'Administrator'
-    }
+  const SESSION_KEY = 'realtysprint_demo_session';
+  const DEFAULT_USER = {
+    name: 'User',
+    email: '',
+    role: 'User'
   };
 
   /**
-   * Helper to check if a valid demo session exists in localStorage
+   * Helper to check if a valid session exists in sessionStorage
    */
   function isAuthenticated() {
     try {
-      const sessionData = localStorage.getItem(DEMO_CONFIG.SESSION_KEY);
+      const sessionData = sessionStorage.getItem(SESSION_KEY);
       if (!sessionData) return false;
       const parsed = JSON.parse(sessionData);
-      return parsed && parsed.authenticated === true;
+      return parsed && parsed.authenticated === true && !!parsed.token;
     } catch (e) {
       return false;
     }
@@ -43,45 +40,48 @@ const Auth = (function () {
   }
 
   /**
-   * Demo Login function
+   * Login function using backend API
    */
-  function login(email, password) {
+  async function login(email, password) {
     const trimmedEmail = (email || '').trim();
     const trimmedPassword = (password || '').trim();
 
-    if (!trimmedEmail) {
-      return { success: false, error: 'Please enter your email address.' };
-    }
+    if (!trimmedEmail) return { success: false, error: 'Please enter your email address.' };
+    if (!isValidEmail(trimmedEmail)) return { success: false, error: 'Please enter a valid email format.' };
+    if (!trimmedPassword) return { success: false, error: 'Please enter your password.' };
 
-    if (!isValidEmail(trimmedEmail)) {
-      return { success: false, error: 'Please enter a valid email format.' };
-    }
+    try {
+      const response = await fetch(`${API_BASE_URL}/api/auth/login`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: trimmedEmail, password: trimmedPassword })
+      });
 
-    if (!trimmedPassword) {
-      return { success: false, error: 'Please enter your password.' };
+      const data = await response.json();
+      if (data.success && data.token) {
+        const sessionPayload = {
+          authenticated: true,
+          token: data.token,
+          user: data.user,
+          timestamp: new Date().toISOString()
+        };
+        sessionStorage.setItem(SESSION_KEY, JSON.stringify(sessionPayload));
+        return { success: true };
+      } else {
+        return { success: false, error: data.error || 'Invalid email or password.' };
+      }
+    } catch (e) {
+      console.error('Login error:', e);
+      return { success: false, error: 'Network error or server is unavailable.' };
     }
-
-    // Check credentials against demo constants
-    if (trimmedEmail.toLowerCase() === DEMO_CONFIG.EMAIL.toLowerCase() && trimmedPassword === DEMO_CONFIG.PASSWORD) {
-      const sessionPayload = {
-        authenticated: true,
-        user: DEMO_CONFIG.USER,
-        timestamp: new Date().toISOString()
-      };
-      localStorage.setItem(DEMO_CONFIG.SESSION_KEY, JSON.stringify(sessionPayload));
-      return { success: true };
-    }
-
-    // Friendly error for invalid credentials
-    return { success: false, error: 'Invalid email or password.' };
   }
 
   /**
-   * Demo Logout function
+   * Logout function
    */
   function logout() {
-    localStorage.removeItem(DEMO_CONFIG.SESSION_KEY);
-    
+    sessionStorage.removeItem(SESSION_KEY);
+
     // Determine path back to login.html
     const path = window.location.pathname;
     if (path.includes('/app/')) {
@@ -106,24 +106,20 @@ const Auth = (function () {
   }
 
   /**
-   * Get current demo user info
+   * Get current user info
    */
   function getCurrentUser() {
     if (!isAuthenticated()) return null;
     try {
-      const sessionData = localStorage.getItem(DEMO_CONFIG.SESSION_KEY);
+      const sessionData = sessionStorage.getItem(SESSION_KEY);
       const parsed = JSON.parse(sessionData);
-      return parsed.user || DEMO_CONFIG.USER;
+      return parsed.user || DEFAULT_USER;
     } catch (e) {
-      return DEMO_CONFIG.USER;
+      return DEFAULT_USER;
     }
   }
 
   return {
-    DEMO_CREDENTIALS: {
-      email: DEMO_CONFIG.EMAIL,
-      password: DEMO_CONFIG.PASSWORD
-    },
     isAuthenticated: isAuthenticated,
     login: login,
     logout: logout,

@@ -28,6 +28,18 @@ class FounderPA extends BaseAgent {
       case 'generate_report':
         return caps.generateReport(context);
 
+      case 'daily_briefing':
+        return caps.dailyBriefing(context);
+
+      case 'summarize_tasks':
+        return caps.summarizeTasks(context);
+
+      case 'propose_tasks':
+        return caps.proposeTasks(context);
+
+      case 'create_internal_task':
+        return caps.createInternalTask(context);
+
       case 'analyze_revenue':
         return caps.analyzeRevenue(context);
 

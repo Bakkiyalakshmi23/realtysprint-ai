@@ -9,9 +9,10 @@ const router     = express.Router();
 const { pool }   = require('../db/pool');
 const { getLeads } = require('../services/demoData');
 const { handoverWonLead } = require('../services/workflows');
-const { requireDemoAuth } = require('../middleware/demoAuth');
+const { processImport } = require('../services/leadImportService');
+const { requireAuth } = require('../middleware/authMiddleware');
 
-router.get('/', requireDemoAuth, async (req, res, next) => {
+router.get('/', requireAuth, async (req, res, next) => {
   try {
     const result = await pool.query(`
       SELECT
@@ -49,7 +50,7 @@ router.get('/', requireDemoAuth, async (req, res, next) => {
   }
 });
 
-router.post('/:id/handover', requireDemoAuth, async (req, res) => {
+router.post('/:id/handover', requireAuth, async (req, res) => {
   const { founderConfirmedWon, projectTitle, requirements, contractValue, currency } = req.body || {};
   if (founderConfirmedWon !== true) {
     return res.status(400).json({ success: false, error: 'Founder must confirm that the client is won before handover.' });
@@ -78,6 +79,29 @@ router.post('/:id/handover', requireDemoAuth, async (req, res) => {
   });
   if (result.error) return res.status(result.status || 400).json({ success: false, error: result.error });
   return res.status(result.alreadyHandedOver ? 200 : 201).json({ success: true, data: result, revenueStatus: 'expected', actualRevenueRecorded: false });
+});
+
+router.post('/import', requireAuth, async (req, res) => {
+  try {
+    const prospects = req.body?.prospects;
+    if (!prospects) {
+      return res.status(400).json({ success: false, error: 'Missing "prospects" array in request body.' });
+    }
+    const createdBy = req.user?.id || 'system';
+    const result = await processImport(prospects, createdBy);
+
+    // Return 207 Multi-Status if there were some errors but it wasn't a total failure
+    if (result.errors.length > 0 && result.imported > 0) {
+      return res.status(207).json({ success: true, ...result });
+    } else if (result.errors.length > 0 && result.imported === 0 && result.potentialDuplicates === 0) {
+      return res.status(400).json({ success: false, ...result });
+    }
+
+    return res.status(200).json({ success: true, ...result });
+  } catch (error) {
+    console.error('[leads import] error:', error);
+    return res.status(500).json({ success: false, error: 'Internal server error during import.' });
+  }
 });
 
 module.exports = router;

@@ -71,22 +71,6 @@
       color: #64748B;
     }
 
-    .demo-credentials-banner {
-      background: #ECFDF5;
-      border: 1px solid rgba(16, 185, 129, 0.3);
-      border-radius: 10px;
-      padding: 0.85rem 1rem;
-      margin-bottom: 1.5rem;
-      font-size: 0.825rem;
-      color: #065F46;
-    }
-
-    .demo-credentials-banner strong {
-      display: block;
-      margin-bottom: 0.2rem;
-      font-size: 0.85rem;
-      color: #047857;
-    }
 
     .form-field {
       margin-bottom: 1.25rem;
@@ -190,12 +174,6 @@
         <p>Sign in to your AI Workforce Control Center.</p>
       </div>
 
-      <!-- Demo Credentials Banner -->
-      <div class="demo-credentials-banner">
-        <strong>🔑 DEMO Credentials:</strong>
-        Email: <code>admin@realtysprint.ai</code><br>
-        Password: <code>DemoOnly123!</code>
-      </div>
 
       <!-- Error Alert Box -->
       <div id="login-error-alert" class="login-error-alert"></div>
@@ -204,12 +182,12 @@
       <form id="login-form" onsubmit="handleLoginSubmit(event)">
         <div class="form-field">
           <label for="email-input">Email Address</label>
-          <input type="email" id="email-input" class="form-input" placeholder="admin@realtysprint.ai" value="admin@realtysprint.ai" required>
+          <input type="email" id="email-input" class="form-input" placeholder="name@company.com" autocomplete="username" required>
         </div>
 
         <div class="form-field">
           <label for="password-input">Password</label>
-          <input type="password" id="password-input" class="form-input" placeholder="••••••••••••" value="DemoOnly123!" required>
+          <input type="password" id="password-input" class="form-input" placeholder="••••••••••••" autocomplete="current-password" required>
         </div>
 
         <div class="form-row-between">
@@ -238,7 +216,7 @@
       window.location.href = 'app/index.html';
     }
 
-    function handleLoginSubmit(e) {
+    async function handleLoginSubmit(e) {
       e.preventDefault();
       const email = document.getElementById('email-input').value;
       const password = document.getElementById('password-input').value;
@@ -251,8 +229,8 @@
         submitBtn.innerText = 'Signing in...';
       }
 
-      setTimeout(() => {
-        const result = Auth.login(email, password);
+      try {
+        const result = await Auth.login(email, password);
         if (result.success) {
           window.location.href = 'app/index.html';
         } else {
@@ -265,12 +243,25 @@
             submitBtn.innerText = 'Sign In';
           }
         }
-      }, 300);
+      } catch (err) {
+        if (errorAlert) {
+          errorAlert.innerText = 'An unexpected error occurred. Please try again.';
+          errorAlert.style.display = 'block';
+        }
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.innerText = 'Sign In';
+        }
+      }
     }
 
     function handleForgotPassword(e) {
       e.preventDefault();
-      alert('Password recovery will be available when the production authentication service is connected.');
+      const alertBox = document.getElementById('login-error-alert');
+      if (alertBox) {
+        alertBox.innerText = 'Please contact your workspace administrator to reset your password.';
+        alertBox.style.display = 'block';
+      }
     }
   </script>
 </body>

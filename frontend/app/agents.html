@@ -117,132 +117,108 @@
         <p>Manage, inspect, and monitor the two core autonomous AI agents assigned to your real estate operations.</p>
       </div>
 
-      <div class="agents-grid">
-        <!-- AGENT 1: COMPANY PA AGENT -->
-        <div class="agent-card-large">
-          <div>
-            <div class="agent-header-row">
-              <div class="agent-title-box">
-                <div class="agent-avatar-icon">
-                  <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-                </div>
-                <div>
-                  <h3>Company PA Agent</h3>
-                  <span style="font-size: 0.85rem; color: var(--text-light);">Internal Operations Specialist</span>
-                </div>
-              </div>
-              <span class="agent-online-pill"><span class="status-dot"></span> Online</span>
-            </div>
-
-            <p class="agent-desc">
-              Your internal AI operations assistant for tasks, KPIs, reporting, follow-ups, workload visibility, and operational coordination.
-            </p>
-
-            <div class="capabilities-section">
-              <div class="capabilities-title">Capabilities</div>
-              <div class="capabilities-pills">
-                <span class="cap-pill">Task Management</span>
-                <span class="cap-pill">KPI Monitoring</span>
-                <span class="cap-pill">Daily Reporting</span>
-                <span class="cap-pill">Follow-ups</span>
-                <span class="cap-pill">Workload Analysis</span>
-                <span class="cap-pill">Operational Insights</span>
-              </div>
-            </div>
-
-            <div class="capabilities-section">
-              <div class="capabilities-title">Operational Metrics</div>
-              <div class="agent-stats-strip" style="grid-template-columns: repeat(4, 1fr);">
-                <div class="agent-stat-item">
-                  <span class="stat-item-label">Current Workload</span>
-                  <span class="stat-item-val" style="color: var(--blue-light);">5 Tasks</span>
-                </div>
-                <div class="agent-stat-item">
-                  <span class="stat-item-label">Completed Today</span>
-                  <span class="stat-item-val" style="color: var(--green-light);">9 Tasks</span>
-                </div>
-                <div class="agent-stat-item">
-                  <span class="stat-item-label">Success Rate</span>
-                  <span class="stat-item-val">98.2%</span>
-                </div>
-                <div class="agent-stat-item">
-                  <span class="stat-item-label">Last Activity</span>
-                  <span class="stat-item-val" style="font-size: 0.9rem; margin-top: 0.2rem;">09:42 AM</span>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="agent-actions-row" style="margin-top: 1.5rem;">
-            <button class="btn btn-primary" onclick="alert('Company PA Agent drawer active.')">Open Agent</button>
-            <a href="tasks.html?agent=pa" class="btn btn-secondary">Filter Tasks</a>
-          </div>
-        </div>
-
-        <!-- AGENT 2: CLIENT ACQUISITION AGENT -->
-        <div class="agent-card-large client-acq">
-          <div>
-            <div class="agent-header-row">
-              <div class="agent-title-box">
-                <div class="agent-avatar-icon">
-                  <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><polyline points="17 11 19 13 23 9"/></svg>
-                </div>
-                <div>
-                  <h3>Client Acquisition Agent</h3>
-                  <span style="font-size: 0.85rem; color: var(--text-light);">Prospecting & Lead Specialist</span>
-                </div>
-              </div>
-              <span class="agent-online-pill"><span class="status-dot"></span> Online</span>
-            </div>
-
-            <p class="agent-desc">
-              Your AI prospecting assistant for discovering, researching, qualifying, scoring, and organizing real-estate opportunities.
-            </p>
-
-            <div class="capabilities-section">
-              <div class="capabilities-title">Capabilities</div>
-              <div class="capabilities-pills">
-                <span class="cap-pill">Prospect Research</span>
-                <span class="cap-pill">Lead Qualification</span>
-                <span class="cap-pill">Lead Scoring</span>
-                <span class="cap-pill">Company Research</span>
-                <span class="cap-pill">Outreach Drafts</span>
-                <span class="cap-pill">Pipeline Tracking</span>
-              </div>
-            </div>
-
-            <div class="capabilities-section">
-              <div class="capabilities-title">Acquisition Metrics</div>
-              <div class="agent-stats-strip" style="grid-template-columns: repeat(4, 1fr);">
-                <div class="agent-stat-item">
-                  <span class="stat-item-label">Active Prospects</span>
-                  <span class="stat-item-val" style="color: var(--blue-light);">18</span>
-                </div>
-                <div class="agent-stat-item">
-                  <span class="stat-item-label">Qualified Today</span>
-                  <span class="stat-item-val" style="color: var(--green-light);">11</span>
-                </div>
-                <div class="agent-stat-item">
-                  <span class="stat-item-label">Success Rate</span>
-                  <span class="stat-item-val">94.6%</span>
-                </div>
-                <div class="agent-stat-item">
-                  <span class="stat-item-label">Last Activity</span>
-                  <span class="stat-item-val" style="font-size: 0.9rem; margin-top: 0.2rem;">09:36 AM</span>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="agent-actions-row" style="margin-top: 1.5rem;">
-            <button class="btn btn-primary" onclick="alert('Client Acquisition Agent drawer active.')">Open Agent</button>
-            <a href="leads.html" class="btn btn-secondary">View Lead Pipeline</a>
-          </div>
-        </div>
+      <div class="agents-grid" id="hrms-agents-grid">
+        <!-- Rendered by JS -->
       </div>
     </div>
   </div>
 
+  <script src="api.js"></script>
   <script src="app.js"></script>
+  <script>
+    async function loadAgentsHRMS() {
+      const grid = document.getElementById('hrms-agents-grid');
+      API.renderLoading(grid, 'Loading AI Employee Registry...');
+      const res = await API.getAgents();
+      if (!res.ok) {
+        API.renderApiError(grid, res.error);
+        return;
+      }
+      grid.innerHTML = '';
+      res.data.forEach(agent => {
+        const isClientAcq = agent.id === 'client-acquisition';
+        const iconSvg = isClientAcq
+          ? '<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><polyline points="17 11 19 13 23 9"/></svg>'
+          : '<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>';
+
+        let permissionsHtml = '';
+        if (agent.permissions && agent.permissions.length > 0) {
+          agent.permissions.forEach(p => {
+            const requiresApproval = p.startsWith('REQUIRES_APPROVAL:');
+            const pName = requiresApproval ? p.replace('REQUIRES_APPROVAL:', '') : p;
+            permissionsHtml += `<span class="cap-pill" style="${requiresApproval ? 'border:1px solid var(--amber-warning);color:var(--amber-warning);background:rgba(245,158,11,0.1)' : ''}">
+              ${requiresApproval ? '🔒 ' : ''}${pName}
+            </span>`;
+          });
+        } else {
+          permissionsHtml = '<span class="text-muted">No specific permissions</span>';
+        }
+
+        const responsibilitiesHtml = agent.responsibilities && agent.responsibilities.length > 0
+          ? agent.responsibilities.map(r => `<span class="cap-pill">${r}</span>`).join('')
+          : '<span class="text-muted">No responsibilities mapped</span>';
+
+        const card = document.createElement('div');
+        card.className = \`agent-card-large \${isClientAcq ? 'client-acq' : ''}\`;
+        card.innerHTML = \`
+          <div>
+            <div class="agent-header-row">
+              <div class="agent-title-box">
+                <div class="agent-avatar-icon">\${iconSvg}</div>
+                <div>
+                  <h3>\${agent.name} <span style="font-size:0.8em;color:var(--text-light)">[\${agent.employee_id || 'ID Pending'}]</span></h3>
+                  <span style="font-size: 0.85rem; color: var(--text-light);">\${agent.role || 'Role Pending'} • \${agent.department || 'Department Pending'}</span>
+                </div>
+              </div>
+              <span class="agent-online-pill"><span class="status-dot"></span> \${agent.status === 'online' ? 'Online' : 'Active'}</span>
+            </div>
+
+            <p class="agent-desc">\${agent.description}</p>
+
+            <div style="font-size:0.85rem; margin-bottom:1rem; color:var(--text-muted)">
+              <strong>Reporting Manager:</strong> \${agent.reporting_manager || 'None'} <br>
+              <strong>Worker Type:</strong> <span style="text-transform:uppercase;font-size:0.75rem;background:rgba(0,0,0,0.1);padding:2px 4px;border-radius:4px;">\${agent.worker_type || 'Unknown'}</span>
+            </div>
+
+            <div class="capabilities-section">
+              <div class="capabilities-title">Responsibilities</div>
+              <div class="capabilities-pills">\${responsibilitiesHtml}</div>
+            </div>
+
+            <div class="capabilities-section">
+              <div class="capabilities-title">Permissions & Authority</div>
+              <div class="capabilities-pills">\${permissionsHtml}</div>
+            </div>
+
+            <div class="capabilities-section">
+              <div class="capabilities-title">Live Operational KPIs (Today UTC)</div>
+              <div class="agent-stats-strip" style="grid-template-columns: repeat(4, 1fr);">
+                <div class="agent-stat-item">
+                  <span class="stat-item-label">Total Assigned</span>
+                  <span class="stat-item-val" style="color: var(--blue-light);">\${agent.tasksToday}</span>
+                </div>
+                <div class="agent-stat-item">
+                  <span class="stat-item-label">Completed</span>
+                  <span class="stat-item-val" style="color: var(--green-light);">\${agent.completedToday}</span>
+                </div>
+                <div class="agent-stat-item">
+                  <span class="stat-item-label">Failed</span>
+                  <span class="stat-item-val" style="\${agent.failedToday > 0 ? 'color:var(--red-danger)' : ''}">\${agent.failedToday}</span>
+                </div>
+                <div class="agent-stat-item">
+                  <span class="stat-item-label">Success Rate</span>
+                  <span class="stat-item-val">\${agent.successRate}</span>
+                </div>
+              </div>
+              <div style="font-size:0.8rem;color:var(--text-muted);margin-top:0.5rem">Last Activity: \${agent.lastActivity || 'None today'}</div>
+            </div>
+          </div>
+        \`;
+        grid.appendChild(card);
+      });
+    }
+
+    document.addEventListener('DOMContentLoaded', loadAgentsHRMS);
+  </script>
 </body>
 </html>

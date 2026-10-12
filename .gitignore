@@ -3,3 +3,26 @@ backend/node_modules/
 .env
 backend/.env
 *.env
+
+# Local environment and secrets
+.env.*
+!.env.example
+!.env.test.example
+!.env.development.example
+
+# Logs and temporary files
+*.log
+logs/
+tmp/
+temp/
+*.bak
+*.backup.*
+
+# Local test and credential files
+.DS_Store
+Thumbs.db
+*.pem
+*.key
+
+# Preserve nested repository locally; do not publish it
+/RealitySprint-AI/

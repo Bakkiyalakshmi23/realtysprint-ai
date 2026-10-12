@@ -34,11 +34,16 @@ async function seed() {
     await client.query('BEGIN');
 
     // ── 1. Demo admin user ─────────────────────────────────────────────────
+    const adminEmail = process.env.ADMIN_EMAIL || 'admin@realtysprint.ai';
+    const adminPass = process.env.ADMIN_PASSWORD || 'DemoOnly123!';
+    const bcrypt = require('../../backend/node_modules/bcryptjs');
+    const hash = bcrypt.hashSync(adminPass, 10);
+
     await client.query(`
       INSERT INTO users (name, email, password_hash, role)
-      VALUES ('RealtySprint Admin', 'admin@realtysprint.ai', 'PLACEHOLDER_HASH_REPLACE_BEFORE_PRODUCTION', 'admin')
-      ON CONFLICT (email) DO NOTHING;
-    `);
+      VALUES ('RealtySprint Admin', $1, $2, 'admin')
+      ON CONFLICT (email) DO UPDATE SET password_hash = EXCLUDED.password_hash;
+    `, [adminEmail, hash]);
     console.log('[seed] ✅ Users seeded');
 
     // ── 2. Agents ──────────────────────────────────────────────────────────

@@ -13,7 +13,7 @@
 
 // Determine API base URL dynamically based on environment
 const isLocal = typeof window !== 'undefined' && (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1');
-const API_BASE_URL = isLocal ? 'http://localhost:4000' : '';
+const API_BASE_URL = isLocal ? 'http://localhost:4000' : "https://api.realitysprint.co.in";
 
 /**
  * Core fetch wrapper with timeout and graceful error handling.
@@ -22,7 +22,18 @@ const API_BASE_URL = isLocal ? 'http://localhost:4000' : '';
  */
 function demoAuthHeaders() {
   if (typeof Auth === 'undefined' || !Auth.isAuthenticated()) return {};
-  return { 'x-demo-session': 'realtysprint-demo-session' };
+
+  try {
+    const sessionData = sessionStorage.getItem('realtysprint_demo_session');
+    if (sessionData) {
+      const parsed = JSON.parse(sessionData);
+      if (parsed.token) {
+        return { 'Authorization': 'Bearer ' + parsed.token };
+      }
+    }
+  } catch(e) {}
+
+  return {};
 }
 
 async function apiFetch(endpoint, timeoutMs = 8000, options = {}) {

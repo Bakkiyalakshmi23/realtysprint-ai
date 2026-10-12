@@ -20,8 +20,11 @@ const SAFE_AUTO_ACTIONS = new Set([
   'analyze_data',
   'calculate_score',
   'generate_report',
+  'daily_briefing',
   'create_recommendation',
   'create_internal_task',
+  'summarize_tasks',
+  'propose_tasks',
   'create_draft',
   'analyze_workforce',
   'analyze_revenue',
@@ -34,9 +37,11 @@ const SAFE_AUTO_ACTIONS = new Set([
   'detect_duplicates',
   'prepare_conversation',
   'prepare_summary',
+  'execute_tasks',
 ]);
 
 const APPROVAL_REQUIRED_ACTIONS = new Set([
+  'create_task',
   'send_email',
   'send_whatsapp',
   'send_linkedin',

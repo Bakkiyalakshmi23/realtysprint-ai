@@ -20,7 +20,7 @@
 const express  = require('express');
 const router   = express.Router();
 const permissionPolicy = require('../../agents/core/permissionPolicy');
-const { requireDemoAuth } = require('../middleware/demoAuth');
+const { requireAuth } = require('../middleware/authMiddleware');
 const workflows = require('../services/workflows');
 
 // Lazy-load agent system to avoid circular deps at startup
@@ -33,7 +33,7 @@ function getAgentSystem() {
 }
 
 // ─── POST /api/agents/execute ─────────────────────────────────────────────────
-router.post('/execute', requireDemoAuth, async (req, res, next) => {
+router.post('/execute', requireAuth, async (req, res, next) => {
   try {
     const { agent: agentSlug, action, input, demoMode } = req.body || {};
 
@@ -71,14 +71,14 @@ router.post('/execute', requireDemoAuth, async (req, res, next) => {
     const rawContext = {
       agent:    agentSlug,
       action,
-      user: req.demoUser,
+      user: req.user,
       input:    input === undefined ? {} : { ...input },
       demoMode: demoMode !== false,
       traceId: req.headers['x-correlation-id'] || req.headers['x-request-id'],
     };
 
     const snapshotActions = agentSlug.trim().toLowerCase() === 'company-pa'
-      ? ['generate_report', 'analyze_revenue', 'check_performance', 'identify_priorities', 'analyze_pipeline', 'analyze_workforce']
+      ? ['generate_report', 'daily_briefing', 'analyze_revenue', 'check_performance', 'identify_priorities', 'analyze_pipeline', 'analyze_workforce', 'summarize_tasks', 'propose_tasks']
       : ['analyze_pipeline'];
     if (snapshotActions.includes(normalizedAction)) {
       rawContext.input.companySnapshot = await workflows.getCompanySnapshot();

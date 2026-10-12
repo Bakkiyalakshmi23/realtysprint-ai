@@ -1,0 +1,64 @@
+services:
+  - type: web
+    name: realtysprint-api
+    env: node
+    plan: free
+    rootDir: backend
+    buildCommand: npm install
+    startCommand: node server.js
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: "4000"
+      - key: DB_HOST
+        sync: false
+      - key: DB_PORT
+        sync: false
+      - key: DB_NAME
+        sync: false
+      - key: DB_USER
+        sync: false
+      - key: DB_PASSWORD
+        sync: false
+      - key: DB_SSL
+        value: "true"
+      - key: JWT_SECRET
+        sync: false
+      - key: CORS_ORIGIN
+        sync: false
+      - key: OPENAI_API_KEY
+        sync: false
+      - key: RESEND_API_KEY
+        sync: false
+      - key: EMAIL_VERIFIED_SENDER
+        sync: false
+      - key: EMAIL_TEST_INBOX
+        sync: false
+      - key: EMAIL_PROVIDER_MODE
+        value: mock
+
+  - type: worker
+    name: realtysprint-worker
+    env: node
+    plan: free
+    rootDir: backend
+    buildCommand: npm install
+    startCommand: node worker.js
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: DB_HOST
+        sync: false
+      - key: DB_PORT
+        sync: false
+      - key: DB_NAME
+        sync: false
+      - key: DB_USER
+        sync: false
+      - key: DB_PASSWORD
+        sync: false
+      - key: DB_SSL
+        value: "true"
+      - key: EMAIL_PROVIDER_MODE
+        value: mock

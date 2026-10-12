@@ -7,7 +7,7 @@
 const express    = require('express');
 const router     = express.Router();
 const { pool }   = require('../db/pool');
-const { requireDemoAuth } = require('../middleware/demoAuth');
+const { requireAuth } = require('../middleware/authMiddleware');
 
 // Helper to check DB connectivity
 async function checkDB() {
@@ -17,7 +17,7 @@ async function checkDB() {
 }
 
 // ─── 1. LIST CLIENTS (GET /api/clients) ──────────────────────────────────────
-router.get('/', requireDemoAuth, async (req, res, next) => {
+router.get('/', requireAuth, async (req, res, next) => {
   try {
     await checkDB();
 
@@ -78,7 +78,7 @@ router.get('/', requireDemoAuth, async (req, res, next) => {
 
 
 // ─── 2. CLIENT 360 VIEW (GET /api/clients/:id) ────────────────────────────────
-router.get('/:id', requireDemoAuth, async (req, res, next) => {
+router.get('/:id', requireAuth, async (req, res, next) => {
   const clientId = parseInt(req.params.id, 10);
   if (isNaN(clientId)) return res.status(400).json({ success: false, error: 'Invalid client ID' });
 
